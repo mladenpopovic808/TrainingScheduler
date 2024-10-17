@@ -14,6 +14,10 @@ The application consists of the following components:
   - **MySQL**: As the relational database management system.
   - **Spring Cloud Gateway**: Used as an API Gateway to route requests to the appropriate services.
   - **Eureka**: For automatic discovery and registration of microservices.
+  - **Swagger**
+  - **JWT**
+  - **AOP**
+  - **ActiveMQ**
 
 - **Notification Service**:
   - Utilizes **ActiveMQ** for message management. When a new message arrives in the queue, the service automatically sends an EMAIL to users.
