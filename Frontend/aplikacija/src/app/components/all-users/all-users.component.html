@@ -1,0 +1,32 @@
+<h1>All users table</h1>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Number of sessions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let user of users" (click)="navigateToEditUser(user)" >
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.numberOfSessions }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Paginacija -->
+  <div class="pagination">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+    <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
+  </div>
+  
+  

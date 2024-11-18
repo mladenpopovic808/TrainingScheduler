@@ -1,0 +1,20 @@
+
+<form>
+
+    <p>Email</p>
+    
+    <input [(ngModel)]="user.email"  name="mail">
+    
+    
+    <p>First Name</p>
+    <input [(ngModel)]="user.firstName"  name="firstName">
+    <p>LastName</p>
+    <input [(ngModel)]="user.lastName"  name="lastName">
+    <p>Username</p>
+    <input [(ngModel)]="user.username"  name="username">
+
+    <br>
+    <button (click)="editUser()">Change user</button>
+
+
+</form>
