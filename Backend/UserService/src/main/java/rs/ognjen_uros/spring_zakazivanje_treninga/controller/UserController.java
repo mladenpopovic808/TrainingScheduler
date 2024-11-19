@@ -8,15 +8,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ognjen_uros.spring_zakazivanje_treninga.domain.Manager;
 import rs.ognjen_uros.spring_zakazivanje_treninga.dto.*;
 import rs.ognjen_uros.spring_zakazivanje_treninga.secutiry.CheckSecurity;
 import rs.ognjen_uros.spring_zakazivanje_treninga.service.UserService;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private UserService userService;
@@ -33,18 +34,30 @@ public class UserController {
                     value = "Sorting criteria in the format: property(,asc|desc). " +
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
-    @GetMapping
-    @CheckSecurity(roles = {"ROLE_ADMIN\", \"ROLE_USER"})
+    @GetMapping("/getAll")
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
     public ResponseEntity<Page<UserDto>> getAllUsers(@RequestHeader("Authorization") String authorization,
                                                      Pageable pageable) {
 
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
-    //PROSAO SVE
-    //PROSAO SVE
-    //PROSAO SVE
-    //PROSAO SVE
+    @ApiOperation(value = "Get all managers")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "What page number you want", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "Number of items to return", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")})
+    @GetMapping("/getAllManagers")
+    @CheckSecurity(roles = {"ROLE_ADMIN"})
+    public ResponseEntity<Page<ManagerDto>> getAllManagers(@RequestHeader("Authorization") String authorization,
+                                                     Pageable pageable) {
+
+        return new ResponseEntity<>(userService.findAllManagers(pageable), HttpStatus.OK);
+    }
+
 
     @GetMapping("/getUser/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable @Valid Long userId) {
@@ -96,9 +109,14 @@ public class UserController {
     public ResponseEntity<UserDto> activateUser(@PathVariable String userKey) {
         return new ResponseEntity<>(userService.activate(userKey), HttpStatus.OK);
     }
-    @ApiOperation(value = "Login")
-    @PostMapping("/updateProfile/{id}")
-    public ResponseEntity<UserDto> changeProfile(@RequestBody @Valid UserChangeDto userDto, @PathVariable Long id) {
-        return new ResponseEntity<>(userService.update(userDto, id), HttpStatus.OK);
+    @ApiOperation(value = "Update user profile")
+    @PostMapping("/updateProfile")
+    public ResponseEntity<UserDto> changeProfile(@RequestBody @Valid UserChangeDto userDto) {
+        return new ResponseEntity<>(userService.update(userDto), HttpStatus.OK);
+    }
+    @ApiOperation(value = "Update manager profile")
+    @PostMapping("/updateManagerProfile/{id}")
+    public ResponseEntity<ManagerDto> changeProfile(@RequestBody @Valid ManagerCreateDto dto, @PathVariable("id")long id) {
+        return new ResponseEntity<>(userService.updateManager(dto,id), HttpStatus.OK);
     }
 }

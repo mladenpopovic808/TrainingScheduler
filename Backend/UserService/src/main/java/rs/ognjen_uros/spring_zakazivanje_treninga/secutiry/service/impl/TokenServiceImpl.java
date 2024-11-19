@@ -68,7 +68,6 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void save(User user, String token) {
         VerificationToken verificationToken = new VerificationToken(token, user);
-        System.out.println("USAO");
         verificationToken.setExpireDate(calculateExpiryDate(24*60));
         tokenRepository.save(verificationToken);
     }

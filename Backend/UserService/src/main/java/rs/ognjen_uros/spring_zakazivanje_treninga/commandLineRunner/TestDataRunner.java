@@ -26,25 +26,44 @@ public class TestDataRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //Dodajemo role
         Role roleUser = new Role("ROLE_USER", "User role");
         Role roleAdmin = new Role("ROLE_ADMIN", "Admin role");
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);
 
-        //Dodajemo admina i managera
+
         User admin = new User();
         admin.setEmail("admin@gmail.com");
         admin.setUsername("admin");
         admin.setPassword("admin");
-        Manager manager = new Manager();
-        manager.setUsernameManager("manager");
-        manager.setPassword("manager");
-        manager.setEmail("manager@gmail.com");
 
+
+        for(int i=0;i<25;i++){
+            User us=new User();
+            us.setEmail("userX"+i+"@gmail.com");
+            us.setFirstName("Marko"+i);
+            us.setLastName("Pavlovic"+i);
+            us.setUsername("MP"+i);
+            us.setPassword("userY"+i);
+            us.setRole(roleUser);
+            us.setNumberOfSessions(0);
+            userRepository.save(us);
+        }
+
+        for(int i=0;i<25;i++){
+            Manager mng=new Manager();
+            mng.setEmailManager("Manager"+i+"@gmail.com");
+            mng.setFirstName("Borivoje "+i);
+            mng.setLastName("Mitic "+i);
+            mng.setUsernameManager("BM "+i);
+            mng.setPassword("userY"+i);
+            mng.setSalaName("Sala "+i);
+
+            managerRepository.save(mng);
+        }
         admin.setRole(roleAdmin);
         userRepository.save(admin);
-        managerRepository.save(manager);
+
 
     }
 }

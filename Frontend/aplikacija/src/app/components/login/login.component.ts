@@ -23,6 +23,7 @@ export class LoginComponent {
 
   login(){
     this.userService.login(this.loginRequest).subscribe(loginResponse=>{
+      
       localStorage.setItem("token",loginResponse.token);
       //this.router.navigate['/nekaStranica']
       

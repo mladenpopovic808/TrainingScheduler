@@ -4,6 +4,7 @@ export interface UserDto{
     firstName:string
     lastName:string
     username:string
+    password:string
     dateOfBirth:string
     numberOfSessions:number
 
@@ -18,6 +19,7 @@ export interface UserCreateDto{
     dateOfBirth:string
 }
 export interface UserChangeDto{
+    id:number
     email:string
     firstName:string
     lastName:string
@@ -40,11 +42,14 @@ export interface SendVerificationLinkToUserDto{
 }
 export interface ManagerDto{
  
+    id:number
     emailManager:string
     salaName:string
     firstName:string
     lastName:string
     usernameManager:string
+    password:string
+
 }
 export interface ManagerCreateDto{
     

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDto } from '../../model';
+import { UserChangeDto } from '../../model';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditUserComponent implements OnInit {
 
 
-  user:UserDto={id:0,email:"",firstName:"",lastName:"",username:"",dateOfBirth:"",numberOfSessions:0}
+  user:UserDto={id:0,email:"",firstName:"",lastName:"",username:"",dateOfBirth:"",numberOfSessions:0,password:""}
 
 
   constructor(private userService:UserService,private router:Router,private route:ActivatedRoute) {
@@ -29,8 +30,37 @@ export class EditUserComponent implements OnInit {
 
     })
   }
+
+  /**
+   * export interface UserChangeDto{
+    email:string
+    firstName:string
+    lastName:string
+    username:string
+    password:string
+}
+   */
   editUser(){
-  //TODO nastavi ovde :)
+    let userChangeDto:UserChangeDto={
+      id:this.user.id,
+      email:this.user.email,
+      firstName:this.user.firstName,
+      lastName:this.user.lastName,
+      username:this.user.username,
+      password:this.user.password
+      
+    }
+
+    this.userService.editUser(userChangeDto).subscribe(result=>{
+
+
+    },error=>{
+      alert("ERROR: UPDATE USER")
+    })
+    
+
+
+  
   }
 
 }

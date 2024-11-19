@@ -27,17 +27,8 @@ public class UserMapper {
         userDto.setUsername(user.getUsername());
         userDto.setNumberOfSessions(user.getNumberOfSessions());
         userDto.setDateOfBirth(user.getDateOfBirth());
+        userDto.setPassword(user.getPassword());
         return userDto;
-    }
-    public ManagerDto manageerToManagerDto(Manager manager) {
-        ManagerDto managerCreateDto = new ManagerDto();
-        managerCreateDto.setEmailManager(manager.getEmailManager());
-        managerCreateDto.setFirstName(manager.getFirstName());
-        managerCreateDto.setLastName(manager.getLastName());
-        managerCreateDto.setSalaName(manager.getSalaName());
-        managerCreateDto.setUsernameManager(manager.getUsernameManager());
-
-        return managerCreateDto;
     }
 
     public User userCreateDtoToUser(UserCreateDto userCreateDto) {

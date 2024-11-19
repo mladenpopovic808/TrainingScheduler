@@ -8,13 +8,17 @@ import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AllManagersComponent } from './components/all-managers/all-managers.component';
+import { EditManagerComponent } from './components/edit-manager/edit-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AllUsersComponent,
-    EditUserComponent
+    EditUserComponent,
+    AllManagersComponent,
+    EditManagerComponent
   ],
   imports: [
     BrowserModule,

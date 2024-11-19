@@ -5,10 +5,10 @@
 
         <ul>
 
-            <li  *ngIf="isAdmin()" id="usersPage"><a (click)="navigateToAdminPage()">Users</a></li>
-            <li  *ngIf="isAdmin()" id="managersPage"><a (click)="navigateToAdminPage()">Managers</a></li>
+            <li  *ngIf="isAdmin()" id="usersPage"><a (click)="navigateToUsersPage()">Users</a></li>
+            <li  *ngIf="isAdmin()" id="managersPage"><a (click)="navigateToManagersPage()">Managers</a></li>
             
-            <li  *ngIf="isAdmin()" id="adminPage"><a (click)="navigateToAdminPage()">Admin Page</a></li>
+            <!-- <li  *ngIf="isAdmin()" id="adminPage"><a (click)="navigateToAdminPage()">Admin Page</a></li> -->
             <li  *ngIf="isUserLoggedIn()" id="logout"><a (click)="logout()">Logout</a></li>
           </ul> 
 

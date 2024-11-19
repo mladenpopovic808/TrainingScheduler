@@ -13,7 +13,13 @@ export class AppComponent {
 
   constructor(private tokenService:TokenService,private router:Router){}
 
-  navigateToAdminPage(){
+  navigateToManagersPage(){
+    this.router.navigate(['allManagers'])
+
+  }
+  navigateToUsersPage():any{
+   
+    this.router.navigate(['allUsers'])
 
   }
 
