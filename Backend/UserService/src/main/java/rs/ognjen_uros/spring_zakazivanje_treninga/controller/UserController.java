@@ -26,6 +26,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    //Imam na frontu
+    //Imam na frontu
+    //Imam na frontu
     @ApiOperation(value = "Get all users")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "What page number you want", dataType = "string", paramType = "query"),
@@ -41,7 +44,9 @@ public class UserController {
 
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
-
+    //Imam na frontu
+    //Imam na frontu
+    //Imam na frontu
     @ApiOperation(value = "Get all managers")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "What page number you want", dataType = "string", paramType = "query"),
@@ -58,7 +63,9 @@ public class UserController {
         return new ResponseEntity<>(userService.findAllManagers(pageable), HttpStatus.OK);
     }
 
-
+    //Imam na frontu
+    //Imam na frontu
+    //Imam na frontu
     @GetMapping("/getUser/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable @Valid Long userId) {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
@@ -68,7 +75,9 @@ public class UserController {
     public ResponseEntity<String> findByToken(@RequestHeader("Authorization") String authorization) {
         return new ResponseEntity<>(userService.findByToken(authorization), HttpStatus.OK);
     }
-
+    //Imam na frontu
+    //Imam na frontu
+    //Imam na frontu
     @GetMapping("/getManager/{managerId}")
     public ResponseEntity<ManagerDto> getManagerById(@PathVariable @Valid Long managerId) {
         return new ResponseEntity<>(userService.getManagerById(managerId), HttpStatus.OK);
@@ -84,13 +93,12 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
-
+    //Imam na frontu
     @ApiOperation(value = "Register user")
     @PostMapping("/registerUser")
     public ResponseEntity<UserDto> saveUser(@RequestBody @Valid UserCreateDto userCreateDto) {
-        return new ResponseEntity<>(userService.add(userCreateDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.register(userCreateDto), HttpStatus.CREATED);
     }
-
 
     @ApiOperation(value = "Register manager")
     @PostMapping("/registerManager")

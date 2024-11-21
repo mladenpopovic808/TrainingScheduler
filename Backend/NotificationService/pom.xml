@@ -57,6 +57,14 @@
 			<version>5.2.8.RELEASE</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.mailersend/java-sdk -->
+		<dependency>
+			<groupId>com.mailersend</groupId>
+			<artifactId>java-sdk</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>

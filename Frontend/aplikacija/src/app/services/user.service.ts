@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ManagerCreateDto, ManagerDto, TokenRequestDto, TokenResponseDto, UserChangeDto, UserDto } from '../model';
+import { ManagerCreateDto, ManagerDto, TokenRequestDto, TokenResponseDto, UserChangeDto, UserCreateDto, UserDto } from '../model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -103,8 +103,12 @@ export class UserService {
   }
   editManager(dto:ManagerCreateDto,managerId:number):Observable<any>{
   
-
     return this.httpClient.post<UserDto>(`${environment.userServiceURL}/updateManagerProfile/${managerId}`,dto,{headers:this.headers})
+
+  }
+  registerUser(dto:UserCreateDto):Observable<any>{
+  
+    return this.httpClient.post<UserDto>(`${environment.userServiceURL}/registerUser/`,dto)
 
   }
  

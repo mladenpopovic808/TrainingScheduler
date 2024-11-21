@@ -1,1 +1,32 @@
-<p>register works!</p>
+
+<h1>Register New User</h1>
+<form>
+
+    <p>Email</p>
+    
+    <input [(ngModel)]="newUser.email"  name="mail">
+    
+    
+    <p>First Name</p>
+    <input [(ngModel)]="newUser.firstName"  name="firstName">
+    <p>LastName</p>
+    <input [(ngModel)]="newUser.lastName"  name="lastName">
+    <p>Username</p>
+    <input [(ngModel)]="newUser.username"  name="username">
+    <p>Password</p>
+    <input [(ngModel)]="newUser.password"  name="password">
+
+    <p>Date Of Birth</p>
+
+    <input  type="date" class="form-control" id="dateFrom" name="dateFrom" placeholder="Pick date from"
+            [(ngModel)]="newUser.dateOfBirth">
+
+
+
+    <br>
+    <br>
+    
+    <button (click)="register()">Register</button>
+
+
+</form>

@@ -6,12 +6,17 @@ import { LoginGuard } from '../guards/login.guard';
 import { EditUserComponent } from '../components/edit-user/edit-user.component';
 import { EditManagerComponent } from '../components/edit-manager/edit-manager.component';
 import { AllManagersComponent } from '../components/all-managers/all-managers.component';
+import { RegisterComponent } from '../components/register/register.component';
 
 const routes: Routes = [
 {
   path:"",
   component:LoginComponent,
   canActivate:[LoginGuard]
+},
+{
+  path:"register",
+  component:RegisterComponent,
 },
 {
   path:"editUser/:id",

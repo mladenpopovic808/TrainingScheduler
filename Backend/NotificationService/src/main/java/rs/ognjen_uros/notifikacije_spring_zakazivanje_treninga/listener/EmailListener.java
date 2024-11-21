@@ -33,9 +33,10 @@ public class EmailListener {
 
     @JmsListener(destination="send_verification_for_user", concurrency = "5-10")
     public void sendVerificationMessage(Message message)throws JMSException {
-        SendVerificationLinkToUserDto sendVerificationLinkToUserDto = messageHelper.getMessage(message, SendVerificationLinkToUserDto.class);
-        System.out.println(sendVerificationLinkToUserDto.toString());
-        emailService.sendSimpleMessage(sendVerificationLinkToUserDto.getEmail(),"Uspesno ste se prijavila na nasu stranicu " + sendVerificationLinkToUserDto.getFirstName() + " " + sendVerificationLinkToUserDto.getLastName(), sendVerificationLinkToUserDto.getLink());
+        //Trazi neke sertifikate, hteo sam da predjem na SendGrid ali su mi odbili signup, ne znam zasto :DD
+//        SendVerificationLinkToUserDto sendVerificationLinkToUserDto = messageHelper.getMessage(message, SendVerificationLinkToUserDto.class);
+//        System.out.println(sendVerificationLinkToUserDto.toString());
+//        emailService.sendSimpleMessage(sendVerificationLinkToUserDto.getEmail(),"Uspesno ste se prijavila na nasu stranicu " + sendVerificationLinkToUserDto.getFirstName() + " " + sendVerificationLinkToUserDto.getLastName(), sendVerificationLinkToUserDto.getLink());
     }
 
     //Podesi da testiras minut od pokretanja projekta

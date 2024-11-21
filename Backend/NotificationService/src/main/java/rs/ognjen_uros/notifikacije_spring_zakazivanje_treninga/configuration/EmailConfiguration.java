@@ -16,15 +16,16 @@ public class EmailConfiguration {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        //Ovo jedino treba da menjas, ostalo je sve isto
-        mailSender.setUsername("");
-        mailSender.setPassword("");
+        mailSender.setUsername("makitestiranje@gmail.com");
+        //mailSender.setPassword("makitestiranje91");
+        mailSender.setPassword("ssanamukkwolvduz");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
+
 
         return mailSender;
     }

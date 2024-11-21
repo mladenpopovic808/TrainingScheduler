@@ -38,10 +38,10 @@ export class LoginComponent {
     //tako da sam premestio gore.
     //this.router.navigate(["allUsers"])
 
-    
-
+  
   }
   register(){
+    this.router.navigate(['register'])
 
   }
 

@@ -10,6 +10,7 @@ import { AllUsersComponent } from './components/all-users/all-users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AllManagersComponent } from './components/all-managers/all-managers.component';
 import { EditManagerComponent } from './components/edit-manager/edit-manager.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EditManagerComponent } from './components/edit-manager/edit-manager.com
     AllUsersComponent,
     EditUserComponent,
     AllManagersComponent,
-    EditManagerComponent
+    EditManagerComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

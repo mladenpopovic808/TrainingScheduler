@@ -1,6 +1,5 @@
 package rs.ognjen_uros.sala_spring_zakazivanje_treninga.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +24,6 @@ import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.TerminReposito
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.TrainingTypeRepository;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.UserTerminRepository;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.secutiry.service.TokenService;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.service.SalaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ import java.util.Map;
 
 @Service
 @Transactional
-public class SalaServiceImpl implements SalaService {
+public class SalaServiceImpl {
 
     private TokenService tokenService;
     private SalaRepository salaRepository;
@@ -69,14 +67,14 @@ public class SalaServiceImpl implements SalaService {
         this.trainingTypeRepository = trainingTypeRepository;
     }
 
-    @Override
+
     public Page<TerminDto> findAll(Pageable pageable) {
         return terminRepository.findAll(pageable).map(salaMapper::terminToTerminDto);
     }
 
     
 
-    @Override
+
     public void scheduleTermin(UserTerminCreateDto userTerminCreate) {
         ResponseEntity<UserDto> userDtoResponseEntity = null;
         //saljemo upit za usera na user mikroservice
@@ -124,7 +122,7 @@ public class SalaServiceImpl implements SalaService {
     }
 
 
-    @Override
+
     public void addSala(SalaDto salaDto) {
         Sala sala = new Sala();
         sala.setName(salaDto.getName());
@@ -133,7 +131,7 @@ public class SalaServiceImpl implements SalaService {
         salaRepository.save(sala);
     }
 
-    @Override
+
     public List<UserTerminResponseDto> getAllZakazaniTreninzi(Long userId) {
         List<UserTermin> userTermin = userTerminRepository.findAllByUserId(userId);
         List<UserTerminResponseDto> userTerminResponseDtoList = new ArrayList<>();
@@ -159,7 +157,7 @@ public class SalaServiceImpl implements SalaService {
         return userTerminResponseDtoList;
     }
 
-    @Override
+
     public List<TerminDto> filterTermins(Map<String, String> params) {
         String day = params.get("dayOfTheWeek") != null ? params.get("dayOfTheWeek") : "";
         String trainingtype = params.get("trainingType")!= null ? params.get("trainingType") : "";
@@ -181,7 +179,7 @@ public class SalaServiceImpl implements SalaService {
         return terminDtoList;
     }
 
-    @Override
+
     public void addTrainingtype(TrainingTypeDto trainingTypeDto) {
         TrainingType trainingType = new TrainingType();
         trainingType.setTypeOfTraining(trainingTypeDto.getTypeOfTraining());
@@ -190,7 +188,7 @@ public class SalaServiceImpl implements SalaService {
         trainingTypeRepository.save(trainingType);
     }
 
-    @Override
+
     public Void addTermin(TerminDto terminDto) {
         Termin termin = new Termin();
 
@@ -213,7 +211,7 @@ public class SalaServiceImpl implements SalaService {
 
     //I korisnik i menadzer mogu da otkazu trening,pogledati specifikaciju
     //NIJE ZAVRSENA METODA!!!
-    @Override
+
     public String unscheduleTermin(UserTerminCreateDto userTerminCreateDto, String jwt) {
         String email = tokenService.extractAllClaims(jwt.substring(7));
         ResponseEntity<UserDto> userDtoResponseEntity = null;
@@ -255,12 +253,12 @@ public class SalaServiceImpl implements SalaService {
     }
 
 
-    @Override
+
     public SalaDto update(SalaDto salaDto, Long id) {
         return null;
     }
 
-    @Override
+
     public List<SalaDto> availableTermins() {
         return null;
     }

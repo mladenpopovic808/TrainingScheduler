@@ -2,19 +2,15 @@ package rs.ognjen_uros.sala_spring_zakazivanje_treninga.controller;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.Termin;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.UserTermin;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.dto.*;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.secutiry.CheckSecurity;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.service.SalaService;
+import rs.ognjen_uros.sala_spring_zakazivanje_treninga.service.impl.SalaServiceImpl;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +19,9 @@ import java.util.Map;
 @RequestMapping("/sala")
 public class SalaController {
 
-    private SalaService salaService;
+    private SalaServiceImpl salaService;
 
-    public SalaController(SalaService salaService) {
+    public SalaController(SalaServiceImpl salaService) {
         this.salaService = salaService;
     }
 
@@ -38,7 +34,7 @@ public class SalaController {
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
     @GetMapping
-    @CheckSecurity(roles = {"ROLE_USER"})
+    @CheckSecurity(roles = {"ROLE_ADMIN,ROLE_USER"})
     public ResponseEntity<Page<TerminDto>> getAllTermini(@RequestHeader("Authorization") String authorization, Pageable pageable) {
         return new ResponseEntity<>(salaService.findAll(pageable) ,HttpStatus.OK);
     }
@@ -64,7 +60,7 @@ public class SalaController {
     }
 
 
-    @PostMapping("/removeTrening")
+    @PostMapping("/unscheduleTraining")
     public ResponseEntity<Void> removeTrening(@RequestHeader("Authorization") String authorization, @RequestBody UserTerminCreateDto userTerminCreateDto){
         salaService.unscheduleTermin(userTerminCreateDto, authorization);
         return new ResponseEntity<>(HttpStatus.OK);

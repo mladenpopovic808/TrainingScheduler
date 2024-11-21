@@ -52,7 +52,7 @@ public class TestDataRunner implements CommandLineRunner {
 
         for(int i=0;i<25;i++){
             Manager mng=new Manager();
-            mng.setEmailManager("Manager"+i+"@gmail.com");
+            mng.setEmailManager("lele"+"@gmail.com");
             mng.setFirstName("Borivoje "+i);
             mng.setLastName("Mitic "+i);
             mng.setUsernameManager("BM "+i);

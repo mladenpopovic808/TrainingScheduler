@@ -92,13 +92,13 @@ public class UserService {
     }
 
 
-    public UserDto add(UserCreateDto userCreateDto) {
+    public UserDto register(UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoToUser(userCreateDto);
         tokenService.save(user, user.getUserKey());
         userRepository.save(user);
-        System.out.println(user);
+
         //Prilikom registracije,salje se mejl potvrda. preko ActiveMQ Brokera saljemo to na email servis.
-        jmsTemplate.convertAndSend(sendVerificationForUser, messageHelper.createTextMessage(new SendVerificationLinkToUserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), "http://localhost:8080/api/user/activate/"+user.getUserKey())));
+        jmsTemplate.convertAndSend(sendVerificationForUser, messageHelper.createTextMessage(new SendVerificationLinkToUserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), "http://localhost:8080/userService/user/activate/"+user.getUserKey())));
         return userMapper.userToUserDto(user);
     }
 
