@@ -197,6 +197,6 @@ public class UserService {
             claims.put("salaName", manager.getSalaName());
             return new TokenResponseDto(tokenService.generate(claims));
         }
-        return new TokenResponseDto("none");
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package rs.ognjen_uros.spring_zakazivanje_treninga.controller;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -108,8 +109,12 @@ public class UserController {
 
     @ApiOperation(value = "Login")
     @PostMapping("/loginUser")
-    public ResponseEntity<TokenResponseDto> loginUser(@RequestBody @Valid TokenRequestDto tokenRequestDto) {
-        return new ResponseEntity<>(userService.login(tokenRequestDto), HttpStatus.OK);
+    public ResponseEntity loginUser(@RequestBody @Valid TokenRequestDto tokenRequestDto) {
+        TokenResponseDto responseDto = userService.login(tokenRequestDto);
+        if(responseDto==null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 

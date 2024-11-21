@@ -1,6 +1,51 @@
-<h1>Training Scheduler!</h1>
 
-<p>Email</p>
+<div>
+
+    <h1>Training Scheduler!</h1>
+
+</div>
+
+<form [formGroup]="loginForm" (submit)="login()">
+
+    <h1 id="loginH1">Login</h1>
+
+    <div class="form-div">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="inputEmail" formControlName="email">
+        <div class="valid-error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+            Email is required</div>
+        
+    </div>
+
+    <div class="form-div">
+        <label for="password">Password</label>
+        <input  type="password" name="passwordInput" id="inputPassword" formControlName="password">
+        <div class="valid-error" *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">Password is required</div>
+        <div class="valid-error" *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
+            Minimum password length is 5 chars
+          </div>
+    </div>
+    <div>
+        <a [routerLink]="'/register'">Registration</a>
+
+    </div>
+
+    <button [disabled]="loginForm.invalid"  type="submit">Login!</button>
+    
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+<!-- <p>Email</p>
 <input [(ngModel)]="loginRequest.email" type="text">
 
 <p>Password</p>
@@ -8,5 +53,5 @@
 
 <button (click)="login()">Login</button>
 
-<button (click)="register()">Register</button>
+<button (click)="register()">Register</button> -->
 
