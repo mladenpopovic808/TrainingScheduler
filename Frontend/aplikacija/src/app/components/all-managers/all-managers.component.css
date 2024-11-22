@@ -1,24 +1,50 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+
+.myTable{
+  font-size: 0.9em;
+  text-align: left;
+  box-shadow: 0 1px 20px rgb(216, 214, 214);
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  width:  70% ;
+}
+h1{
+  font-style: italic;
+}
+.pagination{
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  gap: 10px; /* Razmak između elemenata */
+  height: 50px; /* Opcionalno, visina diva */
+  margin-top: 20px;
   
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
   
-  th {
-    background-color: #f2f2f2;
+  button{
+    background-color: #bececb;
+    border-radius: 2px 2px;
+    font-style: italic;
   }
+}
+
+.mainDiv{
+  display: grid;
+  align-items: center;
+  justify-items: center;
+ 
+}
+
+.myTable thead tr{
+  background-color: aliceblue;
+}
+.myTable th, .myTable td{
+  padding: 14px;
   
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  tbody tr:hover{
-    background-color: beige;
-    cursor: pointer; 
-    zoom: 102%;
-  }
-  
+}
+.myTable tbody tr:nth-of-type(even){
+  background-color: #ebf2f7;
+}
+
+tr:hover{
+  font-weight: bold;
+  cursor: pointer;
+}

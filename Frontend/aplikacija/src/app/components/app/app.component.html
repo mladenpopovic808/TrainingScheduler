@@ -1,25 +1,28 @@
-
-<div *ngIf="isUserLoggedIn()">
-
-    <nav>
-
-        <ul>
-
-            <li  *ngIf="isAdmin()" id="usersPage"><a (click)="navigateToUsersPage()">Users</a></li>
-            <li  *ngIf="isAdmin()" id="managersPage"><a (click)="navigateToManagersPage()">Managers</a></li>
+<html>
+<body>
+    
+    
+    <div class="mainDiv" *ngIf="isUserLoggedIn()">
+        <header>
+            <div class="firstDiv">
+                <h1 class="logo">Training Scheduler</h1>
+            </div>
             
-            <!-- <li  *ngIf="isAdmin()" id="adminPage"><a (click)="navigateToAdminPage()">Admin Page</a></li> -->
-            <li  *ngIf="isUserLoggedIn()" id="logout"><a (click)="logout()">Logout</a></li>
-          </ul> 
-
-
-    </nav>
-
-
-
-
-</div>
-
-
-
+            <div class="secondDiv">
+            <nav>
+                <ul class="lista">
+                    <li  *ngIf="isAdmin()" id="usersPage"><a (click)="navigateToUsersPage()">Users</a></li>
+                    <li  *ngIf="isAdmin()" id="managersPage"><a (click)="navigateToManagersPage()">Managers</a></li>
+                    
+                </ul> 
+            </nav>
+        </div>
+            <div class="thirdDiv">
+                <li  *ngIf="isUserLoggedIn()" id="logout"><a (click)="logout()">Logout</a></li>
+            </div>
+        </header>
+    </div>
+</body>
+</html>
+    
 <router-outlet></router-outlet>

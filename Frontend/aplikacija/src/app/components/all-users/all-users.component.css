@@ -1,24 +1,61 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
+
+
+.myTable{
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  box-shadow: 0 1px 20px rgb(199, 198, 197);
+  min-width: 400px;
+  border-radius: 5px 5px 0 0 ; /*gornja:leva, desna  donja:leva,desna*/
+  overflow: hidden; /* ovo uvek moras da napises kada radis sa border-radius u tabeli */
+  width:50% ;
+  
+}
+
+.mainDiv{
+  
+    display: grid;
+    
+    place-items: center; /* Centriranje po horizontalnoj i vertikalnoj osi */
+    
+}
+
+.pagination{
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  gap: 10px; /* Razmak između elemenata */
+  height: 50px; /* Opcionalno, visina diva */
+  button{
+    background-color: #bececb;
   }
   
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  tbody tr:hover{
-    background-color: beige;
-    cursor: pointer; 
-    zoom: 102%;
-  }
-  
+}
+
+/*glavna kolona*/
+.myTable thead tr{
+  background-color: #009879;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.myTable th, .myTable td{
+  padding: 15px;
+
+}
+
+
+tr:hover{
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.myTable tbody tr{
+  border-bottom: 1px rgb(233, 231, 231) solid;
+}
+
+/* svaki parni*/
+.myTable tbody tr:nth-of-type(even){
+  background-color: rgb(244, 245, 245);
+}

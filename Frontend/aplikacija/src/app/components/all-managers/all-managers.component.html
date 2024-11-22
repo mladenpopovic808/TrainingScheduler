@@ -1,7 +1,7 @@
-<h1>All users table</h1>
 
-
-<table class="table">
+<div class="mainDiv">
+<h1>All managers table</h1>
+<table class="myTable">
     <thead>
       <tr>
         <th>Id</th>
@@ -28,10 +28,10 @@
   </table>
   
   <!-- Paginacija -->
-  <div class="pagination">
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
-    <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
-  </div>
-  
+</div>
+<div class="pagination">
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+  <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages - 1">Next</button>
+</div>
   
