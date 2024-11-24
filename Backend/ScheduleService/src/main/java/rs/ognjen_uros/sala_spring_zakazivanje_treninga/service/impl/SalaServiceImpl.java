@@ -13,7 +13,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.Sala;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.Termin;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.TrainingType;
+import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.Training;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.domain.UserTermin;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.dto.*;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.exception.NotFoundException;
@@ -21,7 +21,7 @@ import rs.ognjen_uros.sala_spring_zakazivanje_treninga.helper.MessageHelper;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.mapper.SalaMapper;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.SalaRepository;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.TerminRepository;
-import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.TrainingTypeRepository;
+import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.TrainingRepository;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.repository.UserTerminRepository;
 import rs.ognjen_uros.sala_spring_zakazivanje_treninga.secutiry.service.TokenService;
 
@@ -35,7 +35,7 @@ public class SalaServiceImpl {
 
     private TokenService tokenService;
     private SalaRepository salaRepository;
-    private TrainingTypeRepository trainingTypeRepository;
+    private TrainingRepository trainingRepository;
     private RestTemplate userServiceRestTemplate;
     private MessageHelper messageHelper;
     private UserTerminRepository userTerminRepository;
@@ -52,7 +52,7 @@ public class SalaServiceImpl {
                            SalaMapper salaMapper, JmsTemplate jmsTemplate, @Value("${destination.incrementNumberOfSessions}") String incrementNumberOfSessions,
                            @Value("${destination.decreaseNumberOfAvailableSpots}") String decrementNumberOfAvailableSpots,
                            @Value("${destination.sendScheduledTreningForUser}") String sendScheduledTreningForUser,
-                           TrainingTypeRepository trainingTypeRepository) {
+                           TrainingRepository trainingRepository) {
         this.salaRepository = salaRepository;
         this.tokenService = tokenService;
         this.salaMapper = salaMapper;
@@ -64,7 +64,7 @@ public class SalaServiceImpl {
         this.incrementNumberOfSessions = incrementNumberOfSessions;
         this.decrementNumberOfAvailableSpots = decrementNumberOfAvailableSpots;
         this.sendZakazanTreningMailForUser = sendScheduledTreningForUser;
-        this.trainingTypeRepository = trainingTypeRepository;
+        this.trainingRepository = trainingRepository;
     }
 
 
@@ -102,7 +102,7 @@ public class SalaServiceImpl {
             return;
         }
         termin.setNumberOfAvailableSpots(termin.getNumberOfAvailableSpots() - 1);
-        userTerminRepository.save(new UserTermin(usr.getId(), userTerminCreate.getTerminId(), termin.getTrainingType().getPrice()));
+        userTerminRepository.save(new UserTermin(usr.getId(), userTerminCreate.getTerminId(), termin.getTraining().getPrice()));
 
         //Saljemo na userService poruku preko ActiveMQ da poveca broj sesija za korisnika
         jmsTemplate.convertAndSend(incrementNumberOfSessions, messageHelper.createTextMessage(new IncrementNumberOfSessionsDto(userTerminCreate.getUserId())));
@@ -111,12 +111,12 @@ public class SalaServiceImpl {
         System.out.println(usr.getEmail());
         System.out.println(usr.getNumberOfSessions());
         if(usr.getNumberOfSessions() % 10 != 0){ // Svaki 10 trening je besplatan
-            price = termin.getTrainingType().getPrice().intValue();
+            price = termin.getTraining().getPrice();
         }
 
         //Saljemo poruku na EmailService da posalje email korisniku
         jmsTemplate.convertAndSend(sendZakazanTreningMailForUser, messageHelper.createTextMessage(new SendScheduledTreningConfirmationDto(usr.getFirstName(), usr.getLastName(),
-                termin.getStart(), termin.getEnd(), termin.getTrainingType().getName(),
+                termin.getStart(), termin.getEnd(), termin.getTraining().getName(),
                 termin.getSala().getName(), price)));
 
     }
@@ -142,6 +142,7 @@ public class SalaServiceImpl {
                             .format("Termin with key: %s not found.", t.getTerminId())));
 
             UserTerminResponseDto userTerminResponseDto = new UserTerminResponseDto();
+
             userTerminResponseDto.setUserId(userId);
             userTerminResponseDto.setId(i);
             i++;
@@ -149,8 +150,8 @@ public class SalaServiceImpl {
             userTerminResponseDto.setStart(termin.getStart());
             userTerminResponseDto.setEnd(termin.getEnd());
             userTerminResponseDto.setSalaName(termin.getSala().getName());
-            userTerminResponseDto.setTrainingName(termin.getTrainingType().getName());
-            userTerminResponseDto.setTrainingType(termin.getTrainingType().getTypeOfTraining());
+            userTerminResponseDto.setTrainingName(termin.getTraining().getName());
+            userTerminResponseDto.setTrainingType(termin.getTraining().getTrainingType());
             userTerminResponseDtoList.add(userTerminResponseDto);
             
         }
@@ -171,8 +172,8 @@ public class SalaServiceImpl {
             terminDto.setAvailableSpots(termin.getNumberOfAvailableSpots());
             terminDto.setStart(termin.getStart());
             terminDto.setEnd(termin.getEnd());
-            terminDto.setTrainingName(termin.getTrainingType().getName());
-            terminDto.setTrainingType(termin.getTrainingType().getTypeOfTraining());
+            terminDto.setTrainingName(termin.getTraining().getName());
+            terminDto.setTrainingType(termin.getTraining().getTrainingType());
             terminDtoList.add(terminDto);
         }
 
@@ -180,12 +181,12 @@ public class SalaServiceImpl {
     }
 
 
-    public void addTrainingtype(TrainingTypeDto trainingTypeDto) {
-        TrainingType trainingType = new TrainingType();
-        trainingType.setTypeOfTraining(trainingTypeDto.getTypeOfTraining());
-        trainingType.setName(trainingTypeDto.getName());
-        trainingType.setPrice(trainingTypeDto.getPrice());
-        trainingTypeRepository.save(trainingType);
+    public void addTrainingtype(TrainingDto trainingDto) {
+        Training trainingType = new Training();
+        trainingType.setTrainingType(trainingDto.getTrainingType());
+        trainingType.setName(trainingDto.getName());
+        trainingType.setPrice(trainingDto.getPrice());
+        trainingRepository.save(trainingType);
     }
 
 
@@ -195,11 +196,11 @@ public class SalaServiceImpl {
         Sala sala = salaRepository.findById(terminDto.getSalaId()).orElseThrow(() ->
                 new NotFoundException(String.format("Sala with key: %s not found.", terminDto.getSalaId())));
 
-        TrainingType trainingType = trainingTypeRepository.findByName(terminDto.getTrainingName());
+        Training trainingType = trainingRepository.findByName(terminDto.getTrainingName());
         termin.setSala(sala);
         termin.setStart(terminDto.getStart());
         termin.setEnd(terminDto.getEnd());
-        termin.setTrainingType(trainingType);
+        termin.setTraining(trainingType);
         termin.setScheduled(false);
         termin.setMinimumNumberOfAvailableSpots(terminDto.getMinimumAvailableSpots());
         termin.setNumberOfAvailableSpots(terminDto.getAvailableSpots());
@@ -251,8 +252,6 @@ public class SalaServiceImpl {
 
         return null;
     }
-
-
 
     public SalaDto update(SalaDto salaDto, Long id) {
         return null;

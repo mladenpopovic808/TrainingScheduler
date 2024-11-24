@@ -52,7 +52,6 @@ public class SalaController {
         return new ResponseEntity<>(salaService.getAllZakazaniTreninzi(userId), HttpStatus.OK);
     }
 
-
     @PostMapping("/scheduleTrening")
     public ResponseEntity<Void> scheduleTrening(@RequestHeader("Authorization") String authorization, @RequestBody UserTerminCreateDto userTerminCreateDto){
         salaService.scheduleTermin(userTerminCreateDto);
@@ -72,8 +71,8 @@ public class SalaController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/addTrainingType")
-    public ResponseEntity<Void> addTrainingtype(@RequestHeader("Authorization") String authorization, @RequestBody TrainingTypeDto trainingTypeDto){
-        salaService.addTrainingtype(trainingTypeDto);
+    public ResponseEntity<Void> addTrainingtype(@RequestHeader("Authorization") String authorization, @RequestBody TrainingDto trainingDto){
+        salaService.addTrainingtype(trainingDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/filter")

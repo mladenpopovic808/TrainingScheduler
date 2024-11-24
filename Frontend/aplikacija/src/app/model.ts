@@ -68,7 +68,7 @@ export interface IncrementNumberOfSessionsDto{
 export interface SalaDto{
     name:string
     about:string
-    numberOfPersonalTrainers:string
+    numberOfPersonalTrainers:number;
 
 }
 export interface SendScheduledTreningConfirmationDto{
@@ -88,16 +88,20 @@ export interface TerminDto{
     salaId:number
     start:string
     end:string
-    trainingType:string
+    trainingType:TrainingType
     trainingName:string
     minimumAvailableSpots:number
     availableSpots:number
     maximumAvailableSpots:number
 }
-export interface TrainingTypeDto{
+enum TrainingType{
+    GROUP="GROUP",SOLO="SOLO"
+}
 
+
+export interface TrainingDto{
     name:string
-    typeOfTraining:string
+    typeOfTraining:TrainingType
     price:number
 }
 
@@ -116,7 +120,7 @@ export interface UserTerminResponseDto{
     start:string
     end:string
     trainingName:string
-    trainingType:string
+    trainingType:TrainingType
 }
 export interface SendScheduledTreningConfirmationDto{
     name:string

@@ -27,31 +27,6 @@ public class User {
 
 
 
-    public void generateMembership() {
-        this.membershipId = this.lastName.charAt(0) + this.username;
-    }
-
-    public Boolean getActivated() {
-        return isActivated;
-    }
-
-    public void setActivated(Boolean activated) {
-        isActivated = activated;
-    }
-
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public void setActivated(boolean activated) {
-        isActivated = activated;
-    }
-
-
 
     @Override
     public String toString() {
