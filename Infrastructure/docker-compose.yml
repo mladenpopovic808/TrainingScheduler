@@ -1,0 +1,135 @@
+version: "3"
+
+services:
+
+  user-service:
+  #Odredjuje ime containera, nalazicete su folderu services (Ako nema, kreirace)
+    image: services/user-service
+    build:
+      context: ${BACKEND_REPO_ABSOLUTE_PATH}/user-service/
+      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/user-service.Dockerfile
+    networks:
+    #Servisi treba da budu u istoj mrezi kako bi komunicirali. Ove mreze sluze da zaokruze neke celine servisa.
+      - user-service-network
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    #Prvo ce pokrenuti database, pa onda ovaj servis
+    depends_on:
+      - database
+
+  schedule-service:
+    image: services/email-service
+    build:
+      context: ${BACKEND_REPO_ABSOLUTE_PATH}/ScheduleService/
+      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/schedule-service.Dockerfile
+    networks:
+      - user-service-network
+    ports:
+      - "8081:8081"
+    restart: on-failure
+    depends_on:
+      - mongo
+
+  eureka:
+    image: services/eureka
+    build:
+      context: ${BACKEND_REPO_ABSOLUTE_PATH}/EurekaService/
+      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/eureka.Dockerfile
+    networks:
+      - user-service-network
+    ports:
+      - "8761:8761"
+    restart: on-failure
+    depends_on:
+      - database
+
+  apiGateway:
+    image: services/apiGateway
+    build:
+      context: ${BACKEND_REPO_ABSOLUTE_PATH}/ApiGatewayService/
+      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/api-gateway.Dockerfile
+    networks:
+      - user-service-network
+    ports:
+      - "8084"
+    restart: on-failure
+    depends_on:
+      - database
+      - user-service
+
+  notificationService:
+    image: services/notificationService
+    build:
+      context: ${BACKEND_REPO_ABSOLUTE_PATH}/notificationService/
+      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/notification-service.Dockerfile
+    networks:
+      - user-service-network
+    ports:
+      - "8082"
+    restart: on-failure
+    depends_on:
+      - database
+      - user-service
+
+  #angular-frontend:
+   # build:
+    #  context: ${FRONTEND_REPO_ABSOLUTE_PATH}/
+     # dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/frontend.Dockerfile
+   # ports:
+    #  - "80:80"
+    #networks:
+    #  - user-service-network
+      
+database:
+  image: mysql:latest
+  environment:
+    MYSQL_DATABASE: gym_schema       # Kreira se baza sa ovim imenom
+    MYSQL_USER: root                 # Korisničko ime za pristup bazi
+    MYSQL_PASSWORD: root             # Lozinka za korisnika
+    MYSQL_ROOT_PASSWORD: root        # Lozinka za root korisnika (administratora)
+  networks:
+    - user-service-network
+  volumes:
+  #Sta je ovo
+  #Sta je ovo
+  #Sta je ovo
+  #Sta je ovo
+  #Sta je ovo
+  #Sta je ovo
+  #Sta je ovo
+    - ${INFRA_REPO_ABSOLUTE_PATH}/init:/docker-entrypoint-initdb.d  # SQL skripte za inicijalizaciju baze
+  ports:
+    - "3306:3306"  # Mapa portova između hosta i kontejnera (MySQL koristi port 3306)
+
+
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - user-service-network
+  #   volumes:
+  #     - redis_data:/data
+
+  # mongo:
+  #   image: mongo:latest
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - user-service-network
+  #   volumes:
+  #     - mongo_data:/data/db
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: mongo_user
+  #     MONGO_INITDB_ROOT_PASSWORD: mongo_password
+  #     MONGO_INITDB_DATABASE: email_service_database
+  #   restart: always
+
+networks:
+  user-service-network:
+
+volumes:
+  database_data:
+  redis_data:
+  mongo_data:

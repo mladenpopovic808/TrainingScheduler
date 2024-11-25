@@ -130,7 +130,7 @@ public class UserService {
         //Proveravamo da li je token jos uvek vremenski validan
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if(timestamp.before(verificationToken.getExpireDate())){
-            user.setActivated(true);
+            user.setIsActivated(true);
             userRepository.save(user);
         }
         return userMapper.userToUserDto(user);
@@ -185,8 +185,8 @@ public class UserService {
             claims.put("id", user.getId());
             claims.put("role", user.getRole().getName());
             claims.put("email", user.getEmail());
-            claims.put("isActive", user.getActivated());
-            claims.put("isDeleted", user.getDeleted());
+            claims.put("isActive", user.getIsActivated());
+            claims.put("isDeleted", user.getIsDeleted());
             return new TokenResponseDto(tokenService.generate(claims));
         }
         Manager manager = managerRepository.findByEmailManagerAndPassword(tokenRequestDto.getEmail(), tokenRequestDto.getPassword());

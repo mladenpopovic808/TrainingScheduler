@@ -31,8 +31,8 @@
 	</properties>
 
 	<modules>
-		<module>ApiGateway microservice</module>
-		<module>Eureka microservice</module>
+		<module>ApiGatewayService</module>
+		<module>EurekaService</module>
 		<module>UserService</module>
 		<module>ScheduleService</module>
 		<module>NotificationService</module>

@@ -43,8 +43,8 @@ public class UserMapper {
         user.setDateOfBirth(userCreateDto.getDateOfBirth());
         user.generateMembership();
         user.setUserKey(user.getMembershipId());
-        user.setActivated(false);
-        user.setDeleted(false);
+        user.setIsActivated(false);
+        user.setIsDeleted(false);
         return user;
     }
 }

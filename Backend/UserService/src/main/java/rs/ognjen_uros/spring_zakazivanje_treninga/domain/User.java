@@ -27,7 +27,6 @@ public class User {
 
 
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -46,4 +45,7 @@ public class User {
                 ", role=" + role +
                 '}';
     }
+    public void generateMembership() {
+        this.membershipId = this.lastName.charAt(0) + this.username;
+        }
 }
