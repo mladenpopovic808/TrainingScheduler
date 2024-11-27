@@ -35,6 +35,8 @@ public class UserService {
     private JmsTemplate jmsTemplate;
     private MessageHelper messageHelper;
     private String sendVerificationForUser;
+    @Value("${thisServiceUrl}")
+    private String thisServiceUrl;
 
     public UserService(TokenService tokenService, UserRepository userRepository,
                        ManagerRepository managerRepository, UserMapper userMapper, ManagerMapper managerMapper,
@@ -98,7 +100,8 @@ public class UserService {
         userRepository.save(user);
 
         //Prilikom registracije,salje se mejl potvrda. preko ActiveMQ Brokera saljemo to na email servis.
-        jmsTemplate.convertAndSend(sendVerificationForUser, messageHelper.createTextMessage(new SendVerificationLinkToUserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), "http://localhost:8080/userService/user/activate/"+user.getUserKey())));
+        jmsTemplate.convertAndSend(sendVerificationForUser, messageHelper.createTextMessage(new SendVerificationLinkToUserDto(user.getId(),
+                user.getFirstName(), user.getLastName(), user.getEmail(), thisServiceUrl+"/user/activate/"+user.getUserKey())));
         return userMapper.userToUserDto(user);
     }
 

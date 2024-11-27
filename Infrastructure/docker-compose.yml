@@ -49,30 +49,31 @@ services:
     networks:
     #Servisi treba da budu u istoj mrezi kako bi komunicirali. Ove mreze sluze da zaokruze neke celine servisa.
       - user-service-network
+    restart: on-failure
     ports:
       - "8080:8080"
-    restart: on-failure
+      - "61616:61616"     # Mapira ActiveMQ port
     depends_on:
       - api-gateway
-      - eureka
+      - angular-frontend
       
     #Prvo ce pokrenuti database, pa onda ovaj servis
 
 
-  schedule-service:
-    image: email-service
-    build:
-      context: ${BACKEND_REPO_ABSOLUTE_PATH}/ScheduleService/
-      dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/schedule-service.Dockerfile
-    networks:
-      - user-service-network
-    ports:
-      - "8081:8081"
-    restart: on-failure
-    
+  # schedule-service:
+  #   image: email-service
+  #   build:
+  #     context: ${BACKEND_REPO_ABSOLUTE_PATH}/ScheduleService/
+  #     dockerfile: ${INFRA_REPO_ABSOLUTE_PATH}/images/schedule-service.Dockerfile
+  #   networks:
+  #     - user-service-network
+  #   ports:
+  #     - "8081:8081"
+  #   restart: on-failure
+  #   depends_on:
+  #     - user-service
       
-
-
+    
   notification-service:
     image: services/notification-service
     build:
@@ -84,8 +85,8 @@ services:
       - "8082:8082"
     restart: on-failure
     depends_on:
-      - database
-      - user-service
+      - api-gateway
+      
 
 
   angular-frontend:

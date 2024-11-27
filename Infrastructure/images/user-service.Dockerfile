@@ -22,4 +22,5 @@ EXPOSE 8080
 
 #Kada se podigne container, pokrenuce se komanda : java -jar /app.jar
 #i samim tim podici ce se nasa aplikacija
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+#ENTRYPOINT ["java", "-jar", "/app.jar", "--spring.profiles.active=prod"]
