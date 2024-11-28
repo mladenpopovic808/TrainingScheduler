@@ -22,6 +22,7 @@ public class SpringZakazivanjeTreningaApplication {
         SpringApplication.run(SpringZakazivanjeTreningaApplication.class, args);
 
         }catch (Exception e){
+
             System.exit(1);
 
         }

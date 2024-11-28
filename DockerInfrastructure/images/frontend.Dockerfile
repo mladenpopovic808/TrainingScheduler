@@ -1,31 +1,34 @@
-# Stage 1: Compile and Build Angular codebase
+
 FROM node:18-alpine as build
 
 WORKDIR /usr/src/app
 
-ARG ENV=production
-
-# Kopiraj package.json i package-lock.json
+## Kopiraj package.json i package-lock.json
 COPY ./package*.json ./
 
 # Instaliraj zavisnosti
 RUN npm install
 
-# Kopiraj celokupan src direktorijum
+# Kopiraj celokupan FRONTEND PROJEKAT
 COPY . /usr/src/app
 
-
-
 # Izvrši build sa odgovarajućim okruženjem
-RUN npm run build -- --configuration $ENV
+RUN npm run build -- --configuration production
 
-# Stage 2: Serve the app using Angular CLI's ng serve
+#Poenta pravljenja 2 stagea je da se smanji memorija zavrsnog image-a
+#U prvom stage-u smo izbuildali ceo projekat, i ako bismo ovde koristili 1 stage,
+#Memorija image-a bi bila 1.2gb (testirao sam)
+
+#Dok ovako pravimo 2 stage, kopiramo samo DIST folder koji je izbuildovan
+# i koji sluzi za pokretanje aplikacije.Memorija ce biti 300mb
+
 FROM node:18-alpine
 
+#Iako isti path imaju, ova 2 WORKDIR-a su razlicita, jer FROM pravi novi sloj
 WORKDIR /usr/src/app
 
-# Kopiraj aplikaciju iz build faze
-COPY --from=build /usr/src/app /usr/src/app
+# # Kopiraj aplikaciju iz build faze
+COPY --from=build /usr/src/app/dist /usr/src/app
 
 # Izloži port 4200
 EXPOSE 4200
